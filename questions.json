@@ -1,12 +1,15 @@
 [
     {
-        "question": "What is the capital of France?",
-        "options": ["Paris", "London", "Berlin", "Madrid"],
-        "answer": "Paris"
+        "question": "Theo Luật Kinh doanh bảo hiểm, đối với hợp đồng bảo hiểm sức khỏe, trường hợp 
+người được bảo hiểm chết, bị thương tật hoặc đau ốm do hành vi trực tiếp hoặc gián 
+tiếp của người thứ ba gây ra, doanh nghiệp bảo hiểm có quyền yêu cầu người thứ ba 
+bồi hoàn khoản tiền mà doanh nghiệp bảo hiểm đã trả cho người thụ hưởng không?",
+        "options": ["Có", "Không"],
+        "answer": "Không"
     },
     {
-        "question": "Which planet is known as the Red Planet?",
-        "options": ["Earth", "Mars", "Jupiter", "Venus"],
-        "answer": "Mars"
+        "question": "Phát biểu nào dưới đây không đúng khi nói về vai trò kinh tế của bảo hiểm",
+        "options": ["Góp phần ổn định tài chính của tổ chức, cá nhân tham gia bảo hiểm", " Đóng vai trò trung gian trong việc huy động vốn cho nền kinh tế quốc dân", "Góp phần ổn định ngân sách quốc gia", "Cung cấp tiền vốn cho người gặp rủi ro thay cho vay ngân hàng"],
+        "answer": "Cung cấp tiền vốn cho người gặp rủi ro thay cho vay ngân hàng"
     }
 ]
