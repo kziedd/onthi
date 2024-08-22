@@ -3,44 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Page</title>
+    <title>Simple Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
             padding: 20px;
-            text-align: center;
         }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 0;
-            margin-bottom: 20px;
-        }
-        h1 {
-            margin: 0;
-        }
-        p {
-            font-size: 18px;
-            color: #333;
-        }
-        footer {
-            margin-top: 20px;
-            color: #777;
+        .question {
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to My GitHub Page Hello</h1>
-    </header>
-    
-    <p>This is a simple website hosted using GitHub Pages.</p>
-    <p>You can add more content, styles, and interactivity to make it your own!</p>
+    <h1>Quiz</h1>
+    <div id="quiz-container"></div>
+    <button onclick="checkAnswers()">Submit</button>
+    <div id="result"></div>
 
-    <footer>
-        <p>&copy; 2024 My GitHub Page</p>
-    </footer>
+    <script>
+        async function loadQuestions() {
+            const response = await fetch('questions.json');
+            const questions = await response.json();
+            let quizContainer = document.getElementById('quiz-container');
+
+            questions.forEach((question, index) => {
+                let questionElement = document.createElement('div');
+                questionElement.className = 'question';
+                questionElement.innerHTML = `
+                    <p>${index + 1}. ${question.question}</p>
+                    ${question.options.map(option => `
+                        <label>
+                            <input type="radio" name="question${index}" value="${option}"> ${option}
+                        </label>
+                        <br>
+                    `).join('')}
+                `;
+                quizContainer.appendChild(questionElement);
+            });
+        }
+
+        function checkAnswers() {
+            let questions = document.querySelectorAll('.question');
+            let score = 0;
+
+            fetch('questions.json')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach((question, index) => {
+                        let selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                        if (selectedOption && selectedOption.value === question.answer) {
+                            score++;
+                        }
+                    });
+                    document.getElementById('result').innerText = `You scored ${score} out of ${data.length}`;
+                });
+        }
+
+        loadQuestions();
+    </script>
 </body>
 </html>
