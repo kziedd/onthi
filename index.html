@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Quiz</title>
+    <title>Instant Feedback Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,14 +12,20 @@
         .question {
             margin-bottom: 15px;
         }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <h1>Quiz</h1>
     <div id="quiz-container"></div>
-    <button onclick="checkAnswers()">Submit</button>
-    <div id="result"></div>
-
+    
     <script>
         async function loadQuestions() {
             const response = await fetch('questions.json');
@@ -33,30 +39,25 @@
                     <p>${index + 1}. ${question.question}</p>
                     ${question.options.map(option => `
                         <label>
-                            <input type="radio" name="question${index}" value="${option}"> ${option}
+                            <input type="radio" name="question${index}" value="${option}" onclick="checkAnswer(${index}, '${option}', '${question.answer}')"> ${option}
                         </label>
                         <br>
                     `).join('')}
+                    <p id="feedback${index}" class="feedback"></p>
                 `;
                 quizContainer.appendChild(questionElement);
             });
         }
 
-        function checkAnswers() {
-            let questions = document.querySelectorAll('.question');
-            let score = 0;
-
-            fetch('questions.json')
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach((question, index) => {
-                        let selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
-                        if (selectedOption && selectedOption.value === question.answer) {
-                            score++;
-                        }
-                    });
-                    document.getElementById('result').innerText = `You scored ${score} out of ${data.length}`;
-                });
+        function checkAnswer(questionIndex, selectedOption, correctAnswer) {
+            let feedbackElement = document.getElementById(`feedback${questionIndex}`);
+            if (selectedOption === correctAnswer) {
+                feedbackElement.textContent = "Correct!";
+                feedbackElement.className = "correct";
+            } else {
+                feedbackElement.textContent = "Incorrect!";
+                feedbackElement.className = "incorrect";
+            }
         }
 
         loadQuestions();
